@@ -1,0 +1,24 @@
+{
+  "name": "@nuxtjs/eslint-config",
+  "version": "12.0.0",
+  "description": "ESlint config used for Nuxt",
+  "repository": "nuxt/eslint-config",
+  "license": "MIT",
+  "files": [
+    "index.js"
+  ],
+  "dependencies": {
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-n": "^15.5.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^6.1.1",
+    "eslint-plugin-unicorn": "^44.0.2",
+    "eslint-plugin-vue": "^9.7.0",
+    "local-pkg": "^0.4.2"
+  },
+  "peerDependencies": {
+    "eslint": "^8.23.0"
+  },
+  "gitHead": "d9d41a13ac66f38231fed0ee95bd9a2cec7b61e9"
+}
