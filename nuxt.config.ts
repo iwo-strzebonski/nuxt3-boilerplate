@@ -17,6 +17,7 @@ export default defineNuxtConfig({
   components: true,
 
   modules: [
+    '@nuxtjs/color-mode'
     // 'vue-sweetalert2/nuxt'
   ],
 
