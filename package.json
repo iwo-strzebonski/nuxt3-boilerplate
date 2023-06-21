@@ -21,7 +21,7 @@
     "*.**": "prettier --check --ignore-unknown"
   },
   "dependencies": {
-    "nuxt": "3.0.0",
+    "nuxt": "3.4.3",
     "@nuxtjs/color-mode": "^3.2.0",
     "vue-sweetalert2": "^5.0.5"
   },
