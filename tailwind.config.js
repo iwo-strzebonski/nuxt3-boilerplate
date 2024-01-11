@@ -1,8 +1,12 @@
-/* eslint-disable import/no-commonjs */
+/* eslint-disable global-require, jsdoc/valid-types */
+const defaultTheme = require('tailwindcss/defaultTheme')
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
+    './node_modules/flowbite.{js,ts}',
+    './node_modules/flowbite/**/*.js',
+    './node_modules/flowbite-vue/**/*.{js,jsx,ts,tsx}',
     './components/**/*.{js,vue,ts}',
     './layouts/**/*.vue',
     './pages/**/*.vue',
@@ -14,19 +18,25 @@ module.exports = {
   theme: {
     extend: {},
     fontFamily: {
-      display: '"Red Hat Display", sans-serif',
-      alegreya: '"Alegreya SC", serif'
+      display: '"Red Hat Display", sans-serif'
     },
     backgroundImage: {
       'gradient-light': 'linear-gradient(180deg, rgba(251, 146, 60, 0.25) 0%, rgba(251, 146, 60, 0.75) 100%)',
       'gradient-dark': 'linear-gradient(180deg, rgba(30, 58, 138, 0.25) 0%, rgba(30, 58, 138, 0.75) 100%)',
       'home-gradient-light': 'linear-gradient(180deg, #FB923C 0%, rgba(251, 146, 60, 0.5) 100%)',
-      'home-gradient-dark': 'linear-gradient(180deg, rgba(30, 58, 138, 0.75) 0%, rgba(30, 58, 138, 0.25) 100%)'
+      'home-gradient-dark': 'linear-gradient(180deg, rgba(30, 58, 138, 0.75) 0%, rgba(30, 58, 138, 0.25) 100%)',
+      'header-desktop': 'url("https://i.postimg.cc/fLHc2Cfc/header-desktop.jpg")',
+      'header-mobile': 'url("https://i.postimg.cc/RFC1LyKC/header-mobile.jpg")'
     },
     dropShadow: {
       'home-title-light': '0px 4px 4px rgba(0, 0, 0, 0.25)',
       'home-title-dark': '0px 4px 4px rgba(255, 255, 255, 0.25)'
+    },
+    screens: {
+      xs: '320px',
+      phone: '437px',
+      ...defaultTheme.screens
     }
   },
-  plugins: []
+  plugins: [require('@tailwindcss/typography'), require('flowbite/plugin')]
 }

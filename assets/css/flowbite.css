@@ -1,0 +1,49 @@
+.flowbite div {
+  @apply !text-zinc-700 dark:!text-zinc-400;
+}
+
+.flowbite div.dark\:bg-gray-700 {
+  @apply dark:!bg-zinc-700;
+}
+
+.flowbite input,
+.flowbite select {
+  @apply !border !border-zinc-500 dark:!border-zinc-950;
+  @apply !bg-zinc-100 dark:!bg-zinc-800;
+  @apply !text-zinc-700 dark:!text-zinc-400;
+  @apply dark:placeholder-zinc-400;
+}
+
+.flowbite input[type="checkbox"] {
+  @apply w-4 h-4;
+}
+
+.flowbite button {
+  @apply !border !border-zinc-500 dark:!border-zinc-950;
+  @apply !bg-zinc-200 hover:!bg-zinc-300 dark:!bg-zinc-900 dark:hover:!bg-zinc-800;
+  @apply dark:!text-zinc-400;
+}
+
+.flowbite button.bg-green-700,
+button.flowbite.bg-green-700 {
+  @apply !border !border-green-500 dark:!border-green-900;
+  @apply !bg-green-400 dark:!bg-green-700;
+  @apply hover:!bg-green-500 dark:hover:!bg-green-800;
+}
+
+.flowbite thead {
+  @apply !bg-zinc-50 dark:!bg-zinc-600;
+}
+
+.flowbite tbody tr {
+  @apply dark:!bg-zinc-800;
+  @apply hover:!bg-zinc-100 dark:hover:!bg-zinc-700;
+  @apply [&:not(:last-child)]:dark:border-zinc-700;
+}
+
+.flowbite.toast,
+.flowbite .toast {
+  @apply !bg-zinc-100 dark:!bg-zinc-800;
+  @apply !text-zinc-700 dark:!text-zinc-400;
+  @apply border-2 dark:!border-zinc-900;
+}

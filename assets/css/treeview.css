@@ -1,0 +1,23 @@
+.tree-level {
+  @apply my-0 transition-opacity duration-300 ease-in-out;
+}
+
+.node-wrapper {
+  @apply rounded-sm cursor-pointer hover:bg-zinc-100 dark:hover:bg-zinc-800;
+}
+
+.level-enter-to {
+  @apply opacity-100 transition-all;
+}
+
+.level-leave-to {
+  @apply opacity-100;
+}
+
+.node-wrapper:focus {
+  @apply bg-zinc-200 dark:bg-zinc-700;
+}
+
+.icon-wrapper {
+  @apply dark:invert;
+}
