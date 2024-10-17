@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+html,
+body {
+  @apply overflow-x-hidden;
+}
+
 *,
 *::before,
 *::after {
@@ -11,26 +16,21 @@
   @apply font-display;
   @apply transition-colors;
   @apply ease-in-out;
-  /* @apply delay-150; */
   @apply duration-300;
-  @apply text-black dark:text-white;
   @apply motion-reduce:transition-none;
   @apply motion-reduce:hover:transform-none;
-  text-rendering: optimizeLegibility;
+
+  text-rendering: optimizelegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-*,
-*::before,
-*::after {
+  
   @apply transition-all;
   @apply ease-in-out;
   @apply duration-300;
 }
 
 body {
-  @apply bg-white dark:bg-black;
+  @apply bg-white;
 }
 
 header a:not(.router-link-exact-active) span.nav {
@@ -47,4 +47,44 @@ h1 {
   @apply leading-tight;
   @apply tracking-tight;
   @apply mb-4;
+}
+
+@layer components {
+  .header-shadow {
+    @apply relative !p-6;
+    @apply bg-black !text-white;
+    @apply w-max;
+    @apply !text-2xl !font-normal;
+  }
+
+  .header-shadow::before {
+    content: '';
+
+    @apply absolute w-full h-full -top-3 -left-3.5 -z-10;
+    @apply bg-cover;
+  }
+
+  .header-shadow-after::after {
+    content: '';
+
+    @apply absolute w-full h-full top-0 right-0 z-10;
+    @apply bg-cover;
+  }
+}
+
+.index-page.markdown-content h1 {
+  @apply header-shadow header-shadow-after;
+  @apply before:bg-sky-400;
+  @apply after:bg-[url('/img/header-gradient.svg')];
+  @apply tracking-wide;
+}
+
+.primary-header,
+.blog-page.markdown-content h1 {
+  @apply header-shadow;
+  @apply before:bg-red-400;
+  @apply self-center;
+  @apply w-max;
+  @apply bg-black !text-white;
+  @apply uppercase !text-base sm:!text-2xl tracking-[.3rem];
 }

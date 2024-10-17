@@ -2,6 +2,7 @@ import { SitemapStream } from 'sitemap'
 
 import checkForLocalhost from './checkForLocalhost'
 
+// eslint-disable-next-line import/no-unresolved
 import { serverQueryContent } from '#content/server'
 
 /**

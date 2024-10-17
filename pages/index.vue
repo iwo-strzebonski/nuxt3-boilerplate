@@ -1,7 +1,26 @@
+<script setup lang="ts">
+import EmptyDoc from '~/components/slots/empty-doc.vue'
+import NotFound from '~/components/slots/not-found.vue'
+
+const $runtime = useRuntimeConfig()
+
+useHead({
+  title: $runtime.public.APP_TITLE
+})
+</script>
+
 <template>
-  <NuxtLayout>
-    <div class="container mx-auto flex flex-col items-center justify-center">
-      <h1 class="text-4xl font-bold">Hello World</h1>
-    </div>
-  </NuxtLayout>
+  <div class="index-page content-page markdown-content flex flex-col flex-1">
+    <main class="container mx-auto my-8 px-4 lg:px-0 flex-1">
+      <content-doc>
+        <template #not-found>
+          <not-found />
+        </template>
+
+        <template #empty>
+          <empty-doc />
+        </template>
+      </content-doc>
+    </main>
+  </div>
 </template>

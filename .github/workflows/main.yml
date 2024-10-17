@@ -1,0 +1,24 @@
+name: Preview Deployment
+
+on:
+  push:
+    branches:
+    - main
+  workflow_dispatch:
+
+jobs:
+  sync_submodules:
+    name: 'Submodules Sync'
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+    - name: Checkout submodules
+      uses: actions/checkout@v3
+      with:
+        token: ${{ secrets.APP_CI_TOKEN }}
+        submodules: true
+        fetch-depth: 0

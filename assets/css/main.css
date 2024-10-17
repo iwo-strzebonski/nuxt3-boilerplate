@@ -5,9 +5,6 @@ a {
   @apply inline-block;
 }
 
-body {
-  @apply bg-white dark:bg-zinc-900;
-}
 
 /* Page transition effects */
 

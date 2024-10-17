@@ -28,10 +28,6 @@ module.exports = {
       'header-desktop': 'url("https://i.postimg.cc/fLHc2Cfc/header-desktop.jpg")',
       'header-mobile': 'url("https://i.postimg.cc/RFC1LyKC/header-mobile.jpg")'
     },
-    dropShadow: {
-      'home-title-light': '0px 4px 4px rgba(0, 0, 0, 0.25)',
-      'home-title-dark': '0px 4px 4px rgba(255, 255, 255, 0.25)'
-    },
     screens: {
       xs: '320px',
       phone: '437px',

@@ -9,7 +9,8 @@ extends:
   - plugin:import/recommended
   - plugin:import/typescript
   - plugin:vue/vue3-essential
-  - '@vue/eslint-config-typescript'
+  - eslint:recommended
+  # - '@vue/eslint-config-typescript/recommended'
   - '@vue/eslint-config-prettier'
   - '@nuxtjs'
   - '@nuxtjs/eslint-config-typescript'
@@ -37,6 +38,9 @@ rules:
       caughtErrorsIgnorePattern: '^_'
   prettier/prettier:
     - error
+  quote-props: off
+  arrow-parens: off
+  vue/singleline-html-element-content-newline: off
   indent: off
   vue/html-self-closing:
     - error
