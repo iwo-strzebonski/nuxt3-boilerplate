@@ -1,0 +1,145 @@
+name: Validate and update lastmod
+
+on:
+  push:
+    paths:
+      - 'content/**/*.md'
+
+jobs:
+  validate-and-update:
+    name: Validate and update content files
+    runs-on: ubuntu-latest
+
+    # Prevent the job from running on commits made by this action itself,
+    # which would otherwise cause an infinite trigger loop.
+    if: github.actor != 'github-actions[bot]'
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Resolve changed content files
+        id: changed
+        run: |
+          BEFORE="${{ github.event.before }}"
+          AFTER="${{ github.event.after }}"
+
+          # On the very first push to a new branch BEFORE is all zeros;
+          # fall back to listing files touched by the HEAD commit only.
+          if [ "$BEFORE" = "0000000000000000000000000000000000000000" ]; then
+            CHANGED=$(git show --name-only --format="" HEAD | grep '^content/.*\.md$' || true)
+          else
+            CHANGED=$(git diff --name-only "$BEFORE" "$AFTER" -- 'content/' | grep '\.md$' || true)
+          fi
+
+          if [ -z "$CHANGED" ]; then
+            echo "No content Markdown files changed."
+            echo "has_files=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_files=true" >> "$GITHUB_OUTPUT"
+            printf '%s\n' "$CHANGED" > /tmp/changed-files.txt
+            echo "Changed files:"
+            cat /tmp/changed-files.txt
+          fi
+
+      - name: Lint changed Markdown files
+        if: steps.changed.outputs.has_files == 'true'
+        run: xargs npx --yes markdownlint-cli2 < /tmp/changed-files.txt
+
+      - name: Verify required preamble
+        if: steps.changed.outputs.has_files == 'true'
+        run: |
+          FAILED=0
+
+          while IFS= read -r file; do
+            [ -z "$file" ] && continue
+            [ ! -f "$file" ] && continue
+
+            # 1. File must start with a YAML front-matter opening delimiter.
+            #    Strip \r to handle both CRLF (Windows) and LF (Unix) line endings.
+            if ! head -1 "$file" | tr -d '\r' | grep -q '^---$'; then
+              echo "ERROR: $file — missing YAML front-matter opening delimiter (---)"
+              FAILED=1
+              continue
+            fi
+
+            # Extract content between the first pair of --- delimiters.
+            # Strip \r to normalise CRLF files.
+            PREAMBLE=$(awk 'NR==1{next} /^---$/{exit} {print}' "$file" | tr -d '\r')
+
+            # 2. Required top-level keys.
+            for FIELD in "lastmod:" "head:"; do
+              if ! printf '%s\n' "$PREAMBLE" | grep -q "^$FIELD"; then
+                echo "ERROR: $file — missing required preamble field: $FIELD"
+                FAILED=1
+              fi
+            done
+
+            # 3. Required meta entries (name: <value> under head.meta).
+            for META in "keywords" "author" "copyright" "createdAt"; do
+              if ! printf '%s\n' "$PREAMBLE" | grep -q "name: $META"; then
+                echo "ERROR: $file — missing required meta entry: name: $META"
+                FAILED=1
+              fi
+            done
+          done < /tmp/changed-files.txt
+
+          if [ "$FAILED" -ne 0 ]; then
+            echo ""
+            echo "One or more files failed preamble validation. See errors above."
+            exit 1
+          fi
+
+      - name: Check for draft documents
+        if: steps.changed.outputs.has_files == 'true'
+        run: |
+          DRAFTS=0
+
+          while IFS= read -r file; do
+            [ -z "$file" ] && continue
+            [ ! -f "$file" ] && continue
+
+            # Extract YAML preamble (strip \r to handle CRLF files).
+            PREAMBLE=$(awk 'NR==1{next} /^---$/{exit} {print}' "$file" | tr -d '\r')
+
+            if printf '%s\n' "$PREAMBLE" | grep -q '^[[:space:]]*draft: true$'; then
+              echo "::warning file=$file::$file is marked as draft: true — drafts are frowned upon but will be accepted. The page will NOT appear on the live website."
+              DRAFTS=$((DRAFTS + 1))
+            fi
+          done < /tmp/changed-files.txt
+
+          if [ "$DRAFTS" -gt 0 ]; then
+            echo ""
+            echo "⚠️  $DRAFTS draft file(s) detected in this push."
+            echo "    Drafts are accepted but strongly discouraged — remove 'draft: true' before the page goes live."
+          fi
+
+      - name: Update lastmod in changed content files
+        if: steps.changed.outputs.has_files == 'true'
+        run: |
+          DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+
+          while IFS= read -r file; do
+            if [ -f "$file" ]; then
+              sed -i "s|^[[:space:]]*lastmod:.*|lastmod: $DATE|" "$file"
+              echo "Updated lastmod in: $file"
+            fi
+          done < /tmp/changed-files.txt
+
+      - name: Commit and push updated files
+        if: steps.changed.outputs.has_files == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add content/
+          if git diff --staged --quiet; then
+            echo "Nothing to commit."
+          else
+            git commit -m "chore: update lastmod for changed content files"
+            git push
+          fi

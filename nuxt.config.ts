@@ -1,5 +1,4 @@
-import { resolve } from 'path'
-
+import tailwindcss from '@tailwindcss/vite'
 import { APP_TITLE, APP_TITLE_SHORT, APP_URL } from './settings/constants'
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
@@ -162,17 +161,26 @@ export default defineNuxtConfig({
     }
   },
 
-  /* nitro: {
-    prerender: {
-      routes: ['/sitemap.xml']
+  routeRules: {
+    '/v1/**': {
+      cors: true,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': '*',
+        'Access-Control-Allow-Credentials': 'true',
+        'Access-Control-Allow-Headers': '*',
+        'Access-Control-Expose-Headers': '*'
+      }
     }
-  }, */
+  },
 
   css: [
     '@/assets/css/main.css',
     '@/assets/css/tailwind.css',
     '@/assets/css/flowbite.css',
     '@/assets/css/content.css',
+    '@/assets/css/admin.css',
+    '@/assets/css/markdown.css',
     'vue3-treeview/dist/style.css',
     '@/assets/css/treeview.css'
   ],
@@ -184,18 +192,6 @@ export default defineNuxtConfig({
     fallback: 'dark'
   },
 
-  content: {
-    documentDriven: true,
-    ignores: ['README.md', 'LICENSE.md', 'CHANGELOG.md', 'CONTRIBUTING.md', 'CODE_OF_CONDUCT.md', 'SECURITY.md'],
-    sources: {
-      content: {
-        driver: 'fs',
-        prefix: '',
-        base: resolve(__dirname, 'content/content')
-      }
-    }
-  },
-
   pwa: {
     devOptions: { enabled: true },
     registerType: 'autoUpdate',
@@ -203,15 +199,20 @@ export default defineNuxtConfig({
   },
 
   modules: [
+    '@nuxt/eslint',
     '@nuxtjs/robots',
+    'nuxt-content-assets',
     '@nuxt/content',
     '@nuxtjs/color-mode',
     '@pinia/nuxt',
-    '@pinia-plugin-persistedstate/nuxt',
+    'pinia-plugin-persistedstate/nuxt',
     '@nuxt/image',
-    '@vite-pwa/nuxt',
-    '@nuxtjs/tailwindcss'
+    '@vite-pwa/nuxt'
   ],
+
+  vite: {
+    plugins: [tailwindcss()]
+  },
 
   build: {
     transpile: [
@@ -222,16 +223,7 @@ export default defineNuxtConfig({
     ]
   },
 
-  postcss: {
-    plugins: {
-      tailwindcss: {},
-      autoprefixer: {}
-    }
-  },
-
   runtimeConfig: {
-    API_KEY: '2137-api-key',
-
     public: {
       APP_URL,
       APP_TITLE,
@@ -239,5 +231,9 @@ export default defineNuxtConfig({
     }
   },
 
-  compatibilityDate: '2024-10-17'
+  devtools: {
+    enabled: true
+  },
+
+  compatibilityDate: '2026-03-21'
 })

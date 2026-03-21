@@ -1,6 +1,0 @@
-User-agent: *
-Disallow: /blog
-Disallow: /_nuxt
-Disallow: /api
-Allow: /blog/*
-Sitemap: https://<url>/sitemap.xml

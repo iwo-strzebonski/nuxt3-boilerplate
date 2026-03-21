@@ -1,0 +1,10 @@
+@reference "./tailwind.css";
+
+/* Admin/dashboard page styles */
+.admin-page .router-link-exact-active {
+  @apply text-blue-500;
+}
+
+.admin-page h3 {
+  @apply text-xl underline;
+}

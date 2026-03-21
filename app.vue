@@ -1,34 +1,32 @@
 <script setup lang="ts">
-import { SpeedInsights } from '@vercel/speed-insights/nuxt'
 import { initFlowbite } from 'flowbite'
 
 const { $pwa } = useNuxtApp()
 
+const runtimeConfig = useRuntimeConfig()
 const $route = useRoute()
-  
-useHead(() => {
+
+useHead(() => ({
   link: [
     {
       rel: 'canonical',
-      href: 'https://www.robocomp.info' + $route.path
+      href: runtimeConfig.public.APP_URL + $route.path
     }
   ]
-})
-  
+}))
+
 onMounted(async () => {
   if (!$pwa) {
     return
   }
 
   if ($pwa.offlineReady) {
-    alert('App is ready to work offline')
+    console.info('App is ready to work offline')
   }
 
   if ($pwa.isInstalled) {
-    // alert('App is installed')
-
     if ($pwa.needRefresh) {
-      alert('App has update available')
+      console.info('App has update available')
 
       await $pwa.updateServiceWorker()
       await $pwa.install()
@@ -37,8 +35,6 @@ onMounted(async () => {
     $pwa.showInstallPrompt = true
     $pwa.install()
   }
-
-  // $pwa.update()
 })
 
 onBeforeMount(() => {
@@ -48,7 +44,6 @@ onBeforeMount(() => {
 
 <template>
   <div>
-    <SpeedInsights />
     <VitePwaManifest />
 
     <NuxtLayout>

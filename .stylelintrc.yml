@@ -12,3 +12,8 @@ rules:
       - variants
       - responsive
       - screen
+      - theme
+      - plugin
+      - config
+      - custom-variant
+      - import

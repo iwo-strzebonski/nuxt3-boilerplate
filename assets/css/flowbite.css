@@ -1,12 +1,14 @@
+@reference "./tailwind.css";
+
 .flowbite div {
-  @apply !text-zinc-400;
+  @apply text-zinc-400!;
 }
 
 .flowbite input,
 .flowbite select {
-  @apply !border !border-zinc-950;
-  @apply !bg-zinc-800;
-  @apply !text-zinc-400;
+  @apply border! border-zinc-950!;
+  @apply bg-zinc-800!;
+  @apply text-zinc-400!;
   @apply placeholder-zinc-400;
 }
 
@@ -15,31 +17,31 @@
 }
 
 .flowbite button {
-  @apply !border !border-zinc-950;
-  @apply !bg-zinc-900 hover:!bg-zinc-800;
-  @apply !text-zinc-400;
+  @apply border! border-zinc-950!;
+  @apply bg-zinc-900! hover:bg-zinc-800!;
+  @apply text-zinc-400!;
 }
 
 .flowbite button.bg-green-700,
 button.flowbite.bg-green-700 {
-  @apply !border !border-green-900;
-  @apply !bg-green-700;
-  @apply hover:!bg-green-800;
+  @apply border! border-green-900!;
+  @apply bg-green-700!;
+  @apply hover:bg-green-800!;
 }
 
 .flowbite thead {
-  @apply !bg-zinc-600;
+  @apply bg-zinc-600!;
 }
 
 .flowbite tbody tr {
-  @apply !bg-zinc-800;
-  @apply hover:!bg-zinc-700;
+  @apply bg-zinc-800!;
+  @apply hover:bg-zinc-700!;
   @apply [&:not(:last-child)]:border-zinc-700;
 }
 
 .flowbite.toast,
 .flowbite .toast {
-  @apply !bg-zinc-800;
-  @apply !text-zinc-400;
-  @apply border-2 !border-zinc-900;
+  @apply bg-zinc-800!;
+  @apply text-zinc-400!;
+  @apply border-2 border-zinc-900!;
 }

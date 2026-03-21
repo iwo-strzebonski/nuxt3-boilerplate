@@ -1,3 +1,5 @@
+@reference "./tailwind.css";
+
 @import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Alegreya+SC:ital,wght@0,400;0,500;0,700;0,800;0,900;1,400;1,500;1,700;1,800;1,900&display=swap');
 
@@ -21,15 +23,15 @@ a {
 }
 */
 
-.diana-page.page-enter-active .diana-page-content,
-.diana-page.page-leave-active .diana-page-content,
+.admin-page.page-enter-active .admin-page-content,
+.admin-page.page-leave-active .admin-page-content,
 .content-page.page-enter-active main,
 .content-page.page-leave-active main {
   transition: all 0.2s;
 }
 
-.diana-page.page-enter-from .diana-page-content,
-.diana-page.page-leave-to .diana-page-content,
+.admin-page.page-enter-from .admin-page-content,
+.admin-page.page-leave-to .admin-page-content,
 .content-page.page-enter-from main,
 .content-page.page-leave-to main {
   opacity: 0;
